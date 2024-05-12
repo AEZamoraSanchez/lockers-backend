@@ -9,7 +9,7 @@ export class createListDto {
      @IsString()
      description: string;
      
-     @IsNotEmpty()
-     @IsString()
-     ownerId: string;
+     ownerId ? : string;
+
+     moduleId ? : string;
 }

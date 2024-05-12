@@ -5,22 +5,34 @@ import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { createLockerDto } from './dto/createLocker.dto';
 import { updateLockerDto } from './dto/updateLocker.dto';
+import { ModuleEService } from 'src/module-e/module-e.service';
 
 @Injectable()
 export class LockersService {
 
      constructor(
           @InjectRepository(Locker) private _lockerRepository: Repository<Locker>,
-          private _userService: UserService
+          private _userService: UserService,
+          private _moduleService: ModuleEService
      ){}
 
      async createLocker ( locker : createLockerDto ){
           try{
-               const user = this._userService.getUserById( locker.ownerId )
-
-               if( !user ){
-                    throw new NotFoundException('Not found')
+               if(locker.ownerId){
+                    const userFound = await this._userService.getUserById( locker.ownerId )
+                    if( !userFound ){
+                         throw new NotFoundException('the user does not exist')
+                    }
                }
+
+               if( locker.moduleId){
+                    const moduleFound = await this._moduleService.getModuleById( locker.moduleId )
+                    
+                    if( !moduleFound ){
+                         throw new NotFoundException('the module does not exist')
+                    }
+               }
+
 
                const newLocker = this._lockerRepository.create(locker)
                const lockerSaved = await this._lockerRepository.save(newLocker)
@@ -29,8 +41,9 @@ export class LockersService {
           }
           catch( error ){
                if ( error?.status == 404){
-                    throw new NotFoundException('the user does not exist')
+                    throw new NotFoundException(error.message)
                }
+               return error
           }
 
      }

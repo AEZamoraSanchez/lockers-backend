@@ -5,32 +5,44 @@ import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { createListDto } from './dto/createList.dto';
 import { updateListDto } from './dto/updateList.dto';
+import { ModuleEService } from 'src/module-e/module-e.service';
 
 @Injectable()
 export class ListsService {
 
      constructor(
           @InjectRepository(List) private _listRepository: Repository<List>,
-          private _userService: UserService
+          private _userService: UserService,
+          private _moduleService : ModuleEService
      ){}
 
-     async createList ( locker : createListDto ){
+     async createList ( list : createListDto ){
           try{
-               const user = this._userService.getUserById( locker.ownerId )
-
-               if( !user ){
-                    throw new NotFoundException('Not found')
+               if(list.ownerId){
+                    const userFound = await this._userService.getUserById( list.ownerId )
+                    if( !userFound ){
+                         throw new NotFoundException('the user does not exist')
+                    }
                }
 
-               const newLocker = this._listRepository.create(locker)
-               const lockerSaved = await this._listRepository.save(newLocker)
+               if( list.moduleId){
+                    const moduleFound = await this._moduleService.getModuleById( list.moduleId )
+                    
+                    if( !moduleFound ){
+                         throw new NotFoundException('the module does not exist')
+                    }
+               }
 
-               return lockerSaved
+               const newList = this._listRepository.create(list)
+               const listSaved = await this._listRepository.save(newList)
+
+               return listSaved
           }
           catch( error ){
                if ( error?.status == 404){
                     throw new NotFoundException('the user does not exist')
                }
+               return error
           }
      }
 

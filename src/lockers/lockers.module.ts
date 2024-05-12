@@ -4,9 +4,10 @@ import { LockersService } from './lockers.service';
 import { Locker } from 'Entitys/locker.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from 'src/user/user.module';
+import { ModuleEModule } from 'src/module-e/module-e.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Locker]), UserModule],
+  imports: [TypeOrmModule.forFeature([Locker]), UserModule, ModuleEModule],
   controllers: [LockersController],
   providers: [LockersService]
 })

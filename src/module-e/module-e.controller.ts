@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ModuleEService } from './module-e.service';
 import { createModuleDto } from './dto/createModule.dto';
+import { updateModuleDto } from './dto/updateModule.dto';
 
 @Controller('module')
 export class ModuleEController {
@@ -22,5 +23,10 @@ export class ModuleEController {
      createModule( @Body() moduleE : createModuleDto){
 
           return this._moduleService.createModule(moduleE)
+     }
+
+     @Patch(':id')
+     updateModule ( @Param('id') id : string, @Body() updateModule : updateModuleDto){
+          return this._moduleService.updateModule( id, updateModule)
      }
 }

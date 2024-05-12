@@ -10,7 +10,8 @@ export class createLockerDto {
      @IsString()
      description: string;
      
-     @IsNotEmpty()
-     @IsString()
-     ownerId: string;
+
+     ownerId ? : string;
+
+     moduleId ? : string;
 }

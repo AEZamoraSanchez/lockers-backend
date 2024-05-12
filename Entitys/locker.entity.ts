@@ -15,15 +15,15 @@ export class Locker {
      @Column()
      description: string
 
-     @Column()
+     @Column({ nullable: true })
      ownerId ? : string
 
-     @Column()
+     @Column({ nullable: true })
      moduleId ? : string
 
      @ManyToOne( () => User, user => user.lockers)
      owner: User
      
      @ManyToOne( () => Module, module => module.lockers, { eager: true })
-     module: Module
+     module: Module;
 }

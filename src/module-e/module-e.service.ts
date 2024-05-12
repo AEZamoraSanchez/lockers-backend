@@ -4,6 +4,7 @@ import { Module } from 'Entitys/module.entity';
 import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { createModuleDto } from './dto/createModule.dto';
+import { updateModuleDto } from './dto/updateModule.dto';
 
 @Injectable()
 export class ModuleEService {
@@ -53,16 +54,36 @@ export class ModuleEService {
 
      async getModuleById ( id : string ){
           try{
-               const module = await this._moduleRepository.findOne({
+               const moduleE = await this._moduleRepository.findOne({
                    where:  { id: id },
                    relations: ['lists', 'lockers']
                })
 
-               if(!module){
+               if(!moduleE){
                     throw new NotFoundException('Not Found')
                }
 
-               return module
+               return moduleE
+          }
+          catch(error){
+               throw new NotFoundException(error.message)
+          }
+     }
+
+     async updateModule ( id : string, updateModule : updateModuleDto) {
+          try{
+               
+               const moduleFound = await this._moduleRepository.findOne({
+                    where: { id : id }
+               })
+
+               if(!moduleFound){
+                    throw new NotFoundException('Not Found')
+               }
+
+               const moduleUpdated = this._moduleRepository.merge(moduleFound, updateModule)
+
+               return moduleUpdated
           }
           catch(error){
                throw new NotFoundException(error.message)

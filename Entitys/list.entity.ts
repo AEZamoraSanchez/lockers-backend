@@ -27,10 +27,10 @@ export class List {
         })
      status: ListStatus
 
-     @Column()
+     @Column({ nullable: true})
      ownerId ? : string;
 
-     @Column()
+     @Column({ nullable: true})
      moduleId ? : string;
 
      @ManyToOne( () => User, user => user.lists)
