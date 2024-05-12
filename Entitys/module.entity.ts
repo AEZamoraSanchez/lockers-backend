@@ -13,8 +13,11 @@ export class Module {
      @Column()
      title: string;
 
-     @Column()
+     @Column({ nullable: true})
      ownerId: string
+
+     @Column({ nullable: true})
+     moduleId: string;
 
      @OneToMany(() => Locker, locker => locker.module)
      lockers: Locker[];
@@ -25,5 +28,10 @@ export class Module {
      @ManyToOne( () => User, user => user.modules)
      owner ? : User;
 
+     @OneToMany(() => Module, moduleE => moduleE.mainModule)
+     modules: Module[];
+
+     @ManyToOne(() => Module, moduleE => moduleE.modules)
+     mainModule: Module;
 
 }

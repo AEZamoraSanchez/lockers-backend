@@ -16,12 +16,22 @@ export class ModuleEService {
 
      async createModule( moduleE : createModuleDto){
           try{
-               
-               const user = await this._userService.getUserById(moduleE?.ownerId)
-               
-               if(!user){
-                    throw new NotFoundException('Not Found')
+               if( moduleE.ownerId){
+                    const userFound = await this._userService.getUserById(moduleE?.ownerId)
+
+                    if(!userFound){
+                         throw new NotFoundException('the user does not exist')
+                    }
                }
+
+               if(moduleE.moduleId){
+                    const moduleFound = await this.getModuleById(moduleE?.moduleId)
+
+                    if(!moduleFound) {
+                         throw new NotFoundException('the module does not exist')
+                    }
+               }
+               
 
                const newModule = this._moduleRepository.create(moduleE)
 
@@ -31,9 +41,9 @@ export class ModuleEService {
           }
           catch(error){
                if ( error?.status == 404){
-                    throw new NotFoundException('the user does not exist')
+                    throw new NotFoundException(error.message)
                }
-               console.error("error", error)
+               return error("error", error)
           }
      }
 
@@ -56,7 +66,7 @@ export class ModuleEService {
           try{
                const moduleE = await this._moduleRepository.findOne({
                    where:  { id: id },
-                   relations: ['lists', 'lockers']
+                   relations: ['lists', 'lockers', 'modules']
                })
 
                if(!moduleE){
