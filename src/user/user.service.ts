@@ -1,14 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserToSign } from '../auth/dto/sign.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/Entitys/user.entity';
+import { User } from 'Entitys/user.entity';
 import { Repository } from 'typeorm';
-import { UserToLogin } from '../auth/dto/login.dto';
 import { UpdateUser } from './dto/updateUser.dto';
 import { JwtService } from '@nestjs/jwt';
-import { userLoginWFacebook } from '../auth/dto/loginFacebook.dto';
-import { TokenRefreshDto } from './dto/tokenRefresh.dto';
-import { userLoginWGoogle } from 'src/auth/dto/loginGoogle.dto';
+
 @Injectable()
 export class UserService {
      constructor(
@@ -16,13 +12,6 @@ export class UserService {
           private userRepository: Repository<User>,
           private jwtService : JwtService
           ){}
-          
-          async signupUser ( user : UserToSign) {}
-          async loginUser ( user : UserToLogin ){}
-          async saveFacebookUser( user : userLoginWFacebook ){}
-          async saveGoogleUser( user : userLoginWGoogle ){}
-          async generateRefreshToken( user : TokenRefreshDto ) {} 
-          async refreshToken ( refreshToken : string ) {}
           async getUsers () {
           try {
                const users = await this.userRepository.find()
@@ -41,7 +30,10 @@ export class UserService {
 
      async getUserById ( id : string ){
           try{
-               const user = await this.userRepository.findOneBy({ id: id })
+               const user = await this.userRepository.findOne({
+                    where : {id: id,},
+                    relations: ['lockers', 'lists', 'modules'], 
+                  });
                if(!user){
                     throw new NotFoundException('Not Found');
                }
@@ -66,7 +58,7 @@ export class UserService {
                return `user ${userToUpdate.username} updated successfully`
           }
           catch (error) {
-               if(error.status == 404){
+               if(error?.status == 404){
                     throw new NotFoundException('the user does not exist');
                }
           }
