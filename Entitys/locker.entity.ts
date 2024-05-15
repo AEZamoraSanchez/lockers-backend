@@ -24,6 +24,6 @@ export class Locker {
      @ManyToOne( () => User, user => user.lockers)
      owner: User
      
-     @ManyToOne( () => Module, module => module.lockers, { eager: true })
+     @ManyToOne( () => Module, module => module.lockers, { onDelete: 'CASCADE', eager: true })
      module: Module;
 }

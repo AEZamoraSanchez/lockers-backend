@@ -36,6 +36,6 @@ export class List {
      @ManyToOne( () => User, user => user.lists)
      owner: User;
 
-     @ManyToOne( () => Module, module => module.lists, { eager: true })
+     @ManyToOne( () => Module, module => module.lists, { onDelete: 'CASCADE', eager: true })
      module: Module;
 }

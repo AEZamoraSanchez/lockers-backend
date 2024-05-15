@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ModuleEService } from './module-e.service';
 import { createModuleDto } from './dto/createModule.dto';
 import { updateModuleDto } from './dto/updateModule.dto';
@@ -28,5 +28,10 @@ export class ModuleEController {
      @Patch(':id')
      updateModule ( @Param('id') id : string, @Body() updateModule : updateModuleDto){
           return this._moduleService.updateModule( id, updateModule)
+     }
+
+     @Delete(':id')
+     deleteModule(@Param('id') id : string ){
+          return this._moduleService.deleteModule(id)
      }
 }
