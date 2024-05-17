@@ -11,27 +11,27 @@ export class ListsController {
      ){}
 
      @Get()
-     getLists(){
+     getListTasks(){
           return this._listService.getLists()
      }
 
      @Get(':id')
-     getListbyId(@Param('id') id : string){
+     getListTaskbyId(@Param('id') id : string){
           return this._listService.getListbyId(id)
      }
 
      @Post()
-     createList(@Body() locker : createListDto){
-          return this._listService.createList(locker)
+     createListTask(@Body() list : createListDto){
+          return this._listService.createList(list)
      }
 
      @Patch(':id')
-     updateList(@Param('id') id : string, @Body() listUpdate : updateListDto){
+     updateListTask(@Param('id') id : string, @Body() listUpdate : updateListDto){
           return this._listService.updateList(id, listUpdate)
      }
 
      @Delete(':id')
-     deleteList(@Param('id') id : string){
+     deleteListTask(@Param('id') id : string){
           return this._listService.deleteList(id)
      }
 }

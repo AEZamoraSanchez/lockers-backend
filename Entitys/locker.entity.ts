@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 import { Module } from "./module.entity";
+import { TaskLocker } from "./taskLocker.entity";
 
 
 @Entity('locker')
@@ -26,4 +27,7 @@ export class Locker {
      
      @ManyToOne( () => Module, module => module.lockers, { onDelete: 'CASCADE', eager: true })
      module: Module;
+
+     @OneToMany(() => TaskLocker, tasks => tasks.locker)
+     lockerTasks: TaskLocker[]
 }

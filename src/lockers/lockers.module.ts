@@ -9,6 +9,7 @@ import { ModuleEModule } from 'src/module-e/module-e.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Locker]), UserModule, ModuleEModule],
   controllers: [LockersController],
-  providers: [LockersService]
+  providers: [LockersService],
+  exports: [LockersService]
 })
 export class LockersModule {}

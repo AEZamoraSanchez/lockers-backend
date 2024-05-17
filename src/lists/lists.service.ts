@@ -63,7 +63,8 @@ export class ListsService {
      async getListbyId ( id : string ) {
           try {
                const listFound = await this._listRepository.findOne({
-                    where: { id : id }
+                    where: { id : id },
+                    relations: ['listTasks']
                })
 
                if(!listFound){
@@ -80,7 +81,7 @@ export class ListsService {
      async updateList ( id : string, listUpdate : updateListDto){
           try {
                const listFound = await this._listRepository.findOne({
-                    where: { id : id }
+                    where: { id : id },
                })
 
                if(!listFound){

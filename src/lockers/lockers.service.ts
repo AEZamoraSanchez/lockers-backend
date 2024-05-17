@@ -65,7 +65,8 @@ export class LockersService {
      async getLockerById ( id : string){
           try {
                const lockerFound = await this._lockerRepository.findOne({
-                    where : { id : id }
+                    where : { id : id },
+                    relations : ['lockerTasks']
                })
 
                if(!lockerFound){

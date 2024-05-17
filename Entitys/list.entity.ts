@@ -1,7 +1,8 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./user.entity";
 import { Module } from "./module.entity";
+import { TaskList } from "./taskList.entity";
 
 export enum ListStatus {
      DONE = 'done',
@@ -20,13 +21,6 @@ export class List {
      @Column()
      description: string;
 
-     @Column({
-          type: 'enum',
-          enum: ListStatus,
-          default: ListStatus.PENDING,
-        })
-     status: ListStatus
-
      @Column({ nullable: true})
      ownerId ? : string;
 
@@ -38,4 +32,7 @@ export class List {
 
      @ManyToOne( () => Module, module => module.lists, { onDelete: 'CASCADE', eager: true })
      module: Module;
+
+     @OneToMany(() => TaskList, task => task.list)
+     listTasks: TaskList[];
 }

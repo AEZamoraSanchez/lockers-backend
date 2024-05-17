@@ -1,3 +1,4 @@
+import { TaskList } from './../Entitys/taskList.entity';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -14,10 +15,13 @@ import { List } from 'Entitys/list.entity';
 import { ListsModule } from './lists/lists.module';
 import { Module as ModuleE } from 'Entitys/module.entity';
 import { ModuleEModule } from './module-e/module-e.module';
+import { ListTaskModule } from './list-task/list-task.module';
+import { TaskLocker } from 'Entitys/taskLocker.entity';
+import { LockerTaskModule } from './locker-task/locker-task.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Locker, List, ModuleE]), 
+    TypeOrmModule.forFeature([User, Locker, List, ModuleE, TaskList, TaskLocker]), 
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -26,7 +30,7 @@ import { ModuleEModule } from './module-e/module-e.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Locker, List, ModuleE],
+      entities: [User, Locker, List, ModuleE, TaskList, TaskLocker],
       synchronize: true
     }),
     JwtModule.register({
@@ -40,6 +44,8 @@ import { ModuleEModule } from './module-e/module-e.module';
     LockersModule,
     ListsModule,
     ModuleEModule,
+    ListTaskModule,
+    LockerTaskModule,
 ],
   controllers: [AppController],
   providers: [ FacebookStrategy, GoogleStrategy ],
