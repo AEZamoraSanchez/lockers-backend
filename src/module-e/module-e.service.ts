@@ -67,16 +67,16 @@ export class ModuleEService {
 
      async getModuleById ( id : string ){
           try{
-               const moduleE = await this._moduleRepository.find({
+               const moduleE = await this._moduleRepository.findOne({
                    where:  { id: id },
                    relations: ['lists', 'lockers', 'modules']
                })
 
-               if(!moduleE || moduleE.length <= 0){
+               if(!moduleE){
                     throw new NotFoundException('Not Found')
                }
 
-               console.log(moduleE)
+               // console.log(moduleE)
                return moduleE
           }
           catch(error){
