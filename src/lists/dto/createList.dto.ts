@@ -8,6 +8,10 @@ export class createListDto {
      @IsNotEmpty()
      @IsString()
      description: string;
+
+     @IsNotEmpty()
+     @IsString()
+     propietario: string;
      
      ownerId ? : string;
 

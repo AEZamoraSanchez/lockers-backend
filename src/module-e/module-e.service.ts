@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Module } from 'Entitys/module.entity';
 import { UserService } from 'src/user/user.service';
@@ -29,7 +29,7 @@ export class ModuleEService {
                }
 
                if(moduleE?.moduleId){
-                    const moduleFound = await this.getModuleById(moduleE?.moduleId)
+                    const moduleFound = await this.getModuleById(moduleE?.moduleId, moduleE?.propietario)
 
                     if(!moduleFound) {
                          throw new NotFoundException('the module does not exist')
@@ -65,23 +65,30 @@ export class ModuleEService {
           }
      }
 
-     async getModuleById ( id : string ){
+     async getModuleById ( id : string, propietario : string){
           try{
                const moduleE = await this._moduleRepository.findOne({
                    where:  { id: id },
                    relations: ['lists', 'lockers', 'modules']
                })
 
+               
                if(!moduleE){
                     throw new NotFoundException('Not Found')
                }
+               
+               if(moduleE.propietario!= propietario){
+                    throw new UnauthorizedException('Unauthorized')
+               }
 
-               // console.log(moduleE)
                return moduleE
           }
           catch(error){
                if(error.status == 404){
                     throw new NotFoundException(error.message)
+               }
+               if(error.status == 401){
+                    throw new UnauthorizedException(error.message)
                }
                return error
           }

@@ -26,7 +26,7 @@ export class ListsService {
                }
 
                if( list.moduleId){
-                    const moduleFound = await this._moduleService.getModuleById( list.moduleId )
+                    const moduleFound = await this._moduleService.getModuleById( list.moduleId, list?.propietario )
                     
                     if( !moduleFound ){
                          throw new NotFoundException('the module does not exist')

@@ -9,7 +9,10 @@ export class createLockerDto {
      @IsNotEmpty()
      @IsString()
      description: string;
-     
+
+     @IsNotEmpty()
+     @IsString()
+     propietario: string;
 
      ownerId ? : string;
 

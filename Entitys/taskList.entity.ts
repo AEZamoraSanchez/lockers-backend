@@ -29,6 +29,6 @@ export class TaskList {
         })
      status: ListStatus
 
-     @ManyToOne( () => List, list => list.listTasks)
+     @ManyToOne( () => List, list => list.listTasks, { onDelete: 'CASCADE', eager: true })
      list : List;
 }

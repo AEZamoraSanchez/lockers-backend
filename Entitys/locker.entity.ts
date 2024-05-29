@@ -28,6 +28,6 @@ export class Locker {
      @ManyToOne( () => Module, module => module.lockers, { onDelete: 'CASCADE', eager: true })
      module: Module;
 
-     @OneToMany(() => TaskLocker, tasks => tasks.locker)
+     @OneToMany(() => TaskLocker, tasks => tasks.locker, { cascade: true, onDelete : 'CASCADE' })
      lockerTasks: TaskLocker[]
 }

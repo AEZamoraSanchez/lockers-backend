@@ -17,6 +17,6 @@ export class TaskLocker {
      @Column()
      lockerId: string;
 
-     @ManyToOne( () => Locker, locker => locker.lockerTasks)
+     @ManyToOne( () => Locker, locker => locker.lockerTasks, { onDelete: 'CASCADE', eager: true })
      locker: Locker;
 }

@@ -33,6 +33,6 @@ export class List {
      @ManyToOne( () => Module, module => module.lists, { onDelete: 'CASCADE', eager: true })
      module: Module;
 
-     @OneToMany(() => TaskList, task => task.list)
+     @OneToMany(() => TaskList, task => task.list, { cascade: true, onDelete : 'CASCADE' })
      listTasks: TaskList[];
 }

@@ -8,6 +8,10 @@ export class createModuleDto {
      @MaxLength(25)  
      title : string;
 
+     @IsNotEmpty()
+     @IsString()
+     propietario : string;
+
      ownerId ? : string;
 
      moduleId ? : string;

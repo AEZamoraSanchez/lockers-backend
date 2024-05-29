@@ -13,6 +13,9 @@ export class Module {
      @Column()
      title: string;
 
+     @Column()
+     propietario: string;
+
      @Column({ nullable: true})
      ownerId: string
 

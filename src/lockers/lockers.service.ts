@@ -26,7 +26,7 @@ export class LockersService {
                }
 
                if( locker.moduleId){
-                    const moduleFound = await this._moduleService.getModuleById( locker.moduleId )
+                    const moduleFound = await this._moduleService.getModuleById( locker.moduleId, locker?.propietario )
                     
                     if( !moduleFound ){
                          throw new NotFoundException('the module does not exist')
@@ -43,7 +43,7 @@ export class LockersService {
                if ( error?.status == 404){
                     throw new NotFoundException(error.message)
                }
-               return error
+               throw new Error(error)
           }
 
      }
