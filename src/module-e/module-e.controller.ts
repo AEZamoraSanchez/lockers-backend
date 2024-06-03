@@ -16,7 +16,7 @@ export class ModuleEController {
 
      @Get(':id/:prop') 
      getModuleById ( @Param('id') id : string,  @Param('prop') prop : string){
-          console.log("prop:",prop)
+          // console.log("prop:",prop)
           return this._moduleService.getModuleById(id, prop)
      }
 

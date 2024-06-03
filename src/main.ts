@@ -5,11 +5,12 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = process.env.PORT || 3000;
   app.useGlobalPipes(new ValidationPipe())
   app.enableCors({
-    origin : 'http://localhost:4200'
+    origin : process.env.FRONT
   })
-  await app.listen(3000);
+  await app.listen(port);
   // if (db) console.log('TURSO CONECTED!');
 }
 bootstrap();
