@@ -29,7 +29,8 @@ export class AuthController {
      @UseGuards(ValidGuard)
      async refreshToken() {
      const refreshToken = await this._authService.refreshToken()
-     return refreshToken; 
+     return refreshToken
+     
      }
 
   @Get('/facebook')
