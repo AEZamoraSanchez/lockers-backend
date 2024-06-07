@@ -4,6 +4,7 @@ import { UserService } from 'src/user/user.service';
 import { UserToSign } from './dto/sign.dto';
 import { UserToLogin } from './dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard as ValidGuard } from 'Guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -12,17 +13,20 @@ export class AuthController {
     ) {}
 
   @Post('/sign')
+  @UseGuards(ValidGuard)
   signupUser( @Body() user : UserToSign){
     return this._authService.signupUser(user);
 }
 
 
      @Post('/login')
+     @UseGuards(ValidGuard)
      async userLogin( @Body() user : UserToLogin){
           return this._authService.loginUser(user);
      }
 
      @Get('/refresh')
+     @UseGuards(ValidGuard)
      async refreshToken() {
      const refreshToken = await this._authService.refreshToken()
      return refreshToken; 
