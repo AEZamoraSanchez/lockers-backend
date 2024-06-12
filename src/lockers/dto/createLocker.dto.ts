@@ -5,10 +5,8 @@ export class createLockerDto {
      @IsNotEmpty()
      @IsString()
      title : string;
-     
-     @IsNotEmpty()
-     @IsString()
-     description: string;
+
+     description ? : string;
 
      @IsNotEmpty()
      @IsString()

@@ -16,8 +16,8 @@ export class TaskList {
      @Column()
      title: string;
 
-     @Column()
-     description: string;
+     // @Column()
+     // description: string;
 
      @Column()
      listId: string;

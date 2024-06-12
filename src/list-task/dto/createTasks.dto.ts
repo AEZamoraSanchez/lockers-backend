@@ -8,9 +8,5 @@ export class createListTaskDto {
 
      @IsNotEmpty()
      @IsString()
-     description : string;
-
-     @IsNotEmpty()
-     @IsString()
      listId : string;
 }

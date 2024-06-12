@@ -5,8 +5,6 @@ export class createListDto {
      @IsString()
      title : string;
      
-     @IsNotEmpty()
-     @IsString()
      description: string;
 
      @IsNotEmpty()
